@@ -8,11 +8,8 @@ with open('resources\\token.json', 'r') as f:
     d_cred = json.load(f)["discord"]
     token = d_cred["token"]
 
-authorized_users = [
-    '287949832814067722',
-    '341319020974178316',
-    '245249323049156609'
-]
+with open('resources\\authorized_users.json', 'w') as f:
+    authorized_users = json.load(f)["authorized_users"]
 
 
 @client.event

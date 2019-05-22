@@ -11,36 +11,39 @@ reddit = praw.Reddit(
     client_secret=r_cred["client_secret"],
     username=r_cred["username"],
     password=r_cred["password"],
-    user_agent=f'/u/{r_cred["username"]} by /u/JingzOoi'
+    user_agent=f'/u/{r_cred["username"]}'
 )
 
-subreddit_list = [
-    'Kaguya_sama_css',
-    'Kaguya_sama'
-]
+with open("resources\\subreddit.json", 'r') as f:
+    subreddit_list = json.load(f)["subreddit"]
 
 
 def read_rules(num="0"):
     with open("resources\\rules.json", "r") as f:
         rules = json.load(f)
-    ruleList = [str(i) for i in range(10)]
-    if num not in ruleList:
-        return "Invalid rule number."
-    elif num == "0":
-        r = 'Subreddit Rules: '
-        for rule, desc in zip(rules.keys(), rules.values()):
-            r += f'\n\n{rule}: {desc}'
-        return f'```{r}```'
-    else:
-        return rules[num]
+    return rules[num]["name"]
+
+
+def import_rules():
+    subreddit = reddit.subreddit(subreddit_list[0])
+    rules = {}
+    for num, rule in enumerate(subreddit.rules()["rules"]):
+        rules[f'{num}'] = {
+            "name": rule["short_name"],
+            "desc": rule["description"]
+        }
+
+    with open('resources\\rules.json', 'w') as f:
+        f.write(json.dumps(rules, indent=4))
 
 
 def remove_submission(url, num):
     submission = reddit.submission(url=url)
     if submission.subreddit.display_name not in subreddit_list:
         return f"Invalid subreddit. Subreddit must be from one of the following: {subreddit_list}"
-    ruleList = [str(i) for i in range(10)]
-    if num not in ruleList:
+    with open("resources\\rules.json", "r") as f:
+        rules = json.load(f)
+    if num not in rules.keys():
         return "Invalid rule number."
     elif num == "0":
         submission.mod.remove()
@@ -59,19 +62,6 @@ def approve_submission(url):
     submission = reddit.submission(url=url)
     submission.mod.approve()
     for c in submission.comments:
-        if c.author == 'botsugi':
+        if c.author == r_cred["username"]:
             c.mod.remove()
     return "Post approved."
-
-
-def newJBchapter(chapterNum, url):
-    r = re.compile(
-        r'https://jaiminisbox\.com/reader/read/kaguya-wants-to-be-confessed-to/en/0/[0-9]+/page/1')
-    if re.match(r, url):
-        subreddit = reddit.subreddit('Kaguya_sama_css')
-        subreddit.submit(
-            title=f"Kaguya Wants to be Confessed to :: Chapter {chapterNum} :: Jaimini's Box", url=url, flair_text="Chapter Discussion")
-
-        return f"Kaguya-sama chapter {chapterNum} by JB posted to /r/Kaguya_sama_css: {subreddit.new(limit=1)}"
-    else:
-        return "URL doesn't look quite right."

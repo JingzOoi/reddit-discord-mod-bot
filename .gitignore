@@ -1,7 +1,5 @@
 .vscode
 
-resources/token.json
-
 temp.py
 
 __pycache__
