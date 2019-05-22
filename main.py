@@ -50,4 +50,12 @@ async def approve(ctx, url):
         await ctx.send(reply)
 
 
+@client.command()
+async def logout(ctx, url):
+    if str(ctx.author.id) not in authorized_users:
+        await ctx.send("You are FORBIDDEN from doing that. **FORBIDDEN**")
+    else:
+        await ctx.send("Logout.")
+        client.logout()
+
 client.run(token)
