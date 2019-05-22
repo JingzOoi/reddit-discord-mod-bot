@@ -33,22 +33,6 @@ def read_rules(num="0"):
         return 'Invalid Rule Number.'
 
 
-def import_rules():
-    try:
-        subreddit = reddit.subreddit(subreddit_list[0])
-    except FileNotFoundError:
-        pass
-    rules = {}
-    for num, rule in enumerate(subreddit.rules()["rules"], start=1):
-        rules[f'{num}'] = {
-            "name": rule["short_name"],
-            "desc": rule["description"]
-        }
-
-    with open('resources\\rules.json', 'w') as f:
-        f.write(json.dumps(rules, indent=4))
-
-
 def remove_submission(url, num):
     submission = reddit.submission(url=url)
     if submission.subreddit.display_name not in subreddit_list:

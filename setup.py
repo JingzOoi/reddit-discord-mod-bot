@@ -1,6 +1,6 @@
 import json
 import os
-from reddit_commands import import_rules
+import praw
 
 # make resources folder
 os.makedirs('resources', exist_ok=True)
@@ -37,7 +37,27 @@ with open('resources\\subreddit.json', 'w') as f:
 
 # import rules
 print('Importing rules from your subreddit.\nReminder: rules are not the ones you list on your sidebar, but the ones you setup in the rules page of your subreddit.')
-import_rules()
+
+with open('resources\\token.json', 'r') as f:
+    r_cred = json.load(f)["reddit"]
+reddit = praw.Reddit(
+    client_id=r_cred["client_id"],
+    client_secret=r_cred["client_secret"],
+    username=r_cred["username"],
+    password=r_cred["password"],
+    user_agent=f'/u/{r_cred["username"]}'
+)
+subreddit = reddit.subreddit(subreddit_list[0])
+
+rules = {}
+for num, rule in enumerate(subreddit.rules()["rules"], start=1):
+    rules[f'{num}'] = {
+        "name": rule["short_name"],
+        "desc": rule["description"]
+    }
+
+with open('resources\\rules.json', 'w') as f:
+    f.write(json.dumps(rules, indent=4))
 
 
 # setup discord users that can use mod commands
