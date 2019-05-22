@@ -27,7 +27,7 @@ def read_rules(num="0"):
     if num not in ruleList:
         return "Invalid rule number."
     elif num == "0":
-        r = 'Rules: '
+        r = 'Subreddit Rules: '
         for rule, desc in zip(rules.keys(), rules.values()):
             r += f'\n\n{rule}: {desc}'
         return f'```{r}```'
