@@ -34,7 +34,10 @@ def read_rules(num="0"):
 
 
 def import_rules():
-    subreddit = reddit.subreddit(subreddit_list[0])
+    try:
+        subreddit = reddit.subreddit(subreddit_list[0])
+    except FileNotFoundError:
+        pass
     rules = {}
     for num, rule in enumerate(subreddit.rules()["rules"], start=1):
         rules[f'{num}'] = {
