@@ -19,9 +19,18 @@ with open("resources\\subreddit.json", 'r') as f:
 
 
 def read_rules(num="0"):
-    with open("resources\\rules.json", "r") as f:
+    with open('resources\\rules.json', 'r') as f:
         rules = json.load(f)
-    return rules[num]["name"]
+
+    if num == "0":
+        ruleReply = "Subreddit Rules:\n"
+        for rule in rules.keys():
+            ruleReply += f'\n{rule}: {rules[rule]["name"]}'
+        return f'```{ruleReply}```'
+    elif num in rules.keys():
+        return f'`{num}: {rules[num]["desc"]}`'
+    else:
+        return '`Invalid Rule Number.`'
 
 
 def import_rules():
