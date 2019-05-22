@@ -27,7 +27,7 @@ def read_rules(num="0"):
 def import_rules():
     subreddit = reddit.subreddit(subreddit_list[0])
     rules = {}
-    for num, rule in enumerate(subreddit.rules()["rules"]):
+    for num, rule in enumerate(subreddit.rules()["rules"], start=1):
         rules[f'{num}'] = {
             "name": rule["short_name"],
             "desc": rule["description"]
