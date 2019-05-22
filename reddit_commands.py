@@ -59,7 +59,7 @@ def remove_submission(url, num):
         time_created = datetime.utcfromtimestamp(submission.created_utc)
         return f"Post removed.\nTime since post creation: {datetime.utcnow()-time_created}"
     else:
-        message = f'Your post seems to have violated Rule {num}. As a result, it has been removed. \n\n>Rule {num}: {read_rules(num=num)}\n\nYou can read the full rules in the sidebar.\n\nIf you think this is a mistake, you can [message the moderators](https://www.reddit.com/message/compose?to=%2Fr%2FKaguya_sama_css).'
+        message = f'Your post seems to have violated Rule {num}. As a result, it has been removed. \n\n>{read_rules(num=num)}\n\nYou can read the full rules in the sidebar.\n\nIf you think this is a mistake, you can [message the moderators](https://www.reddit.com/message/compose?to=%2Fr%2FKaguya_sama_css).'
         comment = submission.reply(message)
         comment.mod.distinguish(how="yes", sticky=True)
         submission.mod.remove()
