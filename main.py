@@ -26,6 +26,11 @@ async def on_command_error(ctx, error):
 
 
 @client.command()
+async def alive(ctx):
+    await ctx.send('`:KaguyaSmug:`')
+
+
+@client.command()
 async def rules(ctx, num="0"):
     await ctx.send(reddit_commands.read_rules(num))
 
