@@ -9,6 +9,8 @@
     <li><a href='https://www.python.org/downloads/release/python-365/'>Python 3.6</a></li>
     <li><a href='https://github.com/praw-dev/praw'>Python Reddit API Wrapper (PRAW)</a></li>
     <li><a href='https://github.com/Rapptz/discord.py'>discord.py</a></li>
+    <a href='https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token'>Register your bot with Discord</a>
+    <a href='https://www.youtube.com/watch?v=krTUf7BpTc0'>Register your script with Reddit (Up till getting the client id and secret for the bot)</a>
 </ol>
 
 Best paired with <a href='https://discordapp.com/oauth2/authorize?client_id=372767838231986177&scope=bot&permissions=27648'>Redditcord by @appu#4444</a>.
