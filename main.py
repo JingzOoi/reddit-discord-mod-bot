@@ -8,7 +8,7 @@ with open('resources\\token.json', 'r') as f:
     d_cred = json.load(f)["discord"]
     token = d_cred["token"]
 
-with open('resources\\authorized_users.json', 'w') as f:
+with open('resources\\authorized_users.json', 'r') as f:
     authorized_users = json.load(f)["authorized_users"]
 
 
