@@ -29,7 +29,7 @@ async def alive(ctx):
 
 @client.command()
 async def rules(ctx, num="0"):
-    await ctx.send(reddit_commands.read_rules(num))
+    await ctx.send(f'```{reddit_commands.read_rules(num)}```')
 
 
 @client.command()

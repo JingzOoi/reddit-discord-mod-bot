@@ -26,11 +26,11 @@ def read_rules(num="0"):
         ruleReply = "Subreddit Rules:\n"
         for rule in rules.keys():
             ruleReply += f'\n{rule}: {rules[rule]["name"]}'
-        return f'```{ruleReply}```'
+        return f'{ruleReply}'
     elif num in rules.keys():
-        return f'`{num}: {rules[num]["desc"]}`'
+        return f'{num}: {rules[num]["desc"]}'
     else:
-        return '`Invalid Rule Number.`'
+        return 'Invalid Rule Number.'
 
 
 def import_rules():
