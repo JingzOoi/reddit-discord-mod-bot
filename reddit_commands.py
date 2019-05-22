@@ -1,5 +1,6 @@
 import praw
 import json
+import re
 from datetime import datetime
 
 with open('resources\\token.json', 'r') as f:
@@ -14,7 +15,8 @@ reddit = praw.Reddit(
 )
 
 subreddit_list = [
-    'Kaguya_sama_css'
+    'Kaguya_sama_css',
+    'Kaguya_sama'
 ]
 
 
@@ -27,7 +29,7 @@ def read_rules(num="0"):
     elif num == "0":
         r = 'Rules: '
         for rule, desc in zip(rules.keys(), rules.values()):
-            r += f'\n{rule}: {desc}'
+            r += f'\n\n{rule}: {desc}'
         return f'```{r}```'
     else:
         return rules[num]
@@ -35,6 +37,8 @@ def read_rules(num="0"):
 
 def remove_submission(url, num):
     submission = reddit.submission(url=url)
+    if submission.subreddit.display_name not in subreddit_list:
+        return f"Invalid subreddit. Subreddit must be from one of the following: {subreddit_list}"
     ruleList = [str(i) for i in range(10)]
     if num not in ruleList:
         return "Invalid rule number."
@@ -60,6 +64,14 @@ def approve_submission(url):
     return "Post approved."
 
 
-def post_info(url):
-    submission = reddit.submission(url=url)
-    return submission
+def newJBchapter(chapterNum, url):
+    r = re.compile(
+        r'https://jaiminisbox\.com/reader/read/kaguya-wants-to-be-confessed-to/en/0/[0-9]+/page/1')
+    if re.match(r, url):
+        subreddit = reddit.subreddit('Kaguya_sama_css')
+        subreddit.submit(
+            title=f"Kaguya Wants to be Confessed to :: Chapter {chapterNum} :: Jaimini's Box", url=url, flair_text="Chapter Discussion")
+
+        return f"Kaguya-sama chapter {chapterNum} by JB posted to /r/Kaguya_sama_css: {subreddit.new(limit=1)}"
+    else:
+        return "URL doesn't look quite right."
