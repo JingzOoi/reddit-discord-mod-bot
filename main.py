@@ -43,7 +43,7 @@ async def setup(ctx):
             return await ctx.send("```Setup not completed. Exiting.```")
         else:
             reddit_username.content.strip("u/")
-            await ctx.send(f"```Great. I'm /u/{reddit_username.content} on Reddit. \nBy the way, logic dictates that my Reddit account should be set as a moderator on the subreddit I'm supposed to moderate, okay?\nWhat's my password?```")
+            await ctx.send(f"```Great. I'm /u/{reddit_username.content} on Reddit. (By the way, logic dictates that my Reddit account should be set as a moderator on the subreddit I'm supposed to moderate, okay?) What's my password?```")
             reddit_password = await client.wait_for("message", check=lambda m: m.channel == ctx.channel and m.author.id == ctx.author.id, timeout=30)
             if not reddit_password or reddit_password.content.lower() == "exit":
                 return await ctx.send("```Setup not completed. Exiting.```")
@@ -60,10 +60,10 @@ async def setup(ctx):
                     else:
                         await ctx.send("```Gotcha. We have completed the Reddit account setup. Please hold on while I test out the credentials.```")
                         client.config["reddit"] = {
-                            "client_id": reddit_client_id,
-                            "client_secret": reddit_client_secret,
-                            "username": reddit_username,
-                            "password": reddit_password,
+                            "client_id": reddit_client_id.content,
+                            "client_secret": reddit_client_secret.content,
+                            "username": reddit_username.content,
+                            "password": reddit_password.content,
                             "user_agent": "Developed by /u/JingzOoi"
                         }
                         loop = asyncio.get_event_loop()
