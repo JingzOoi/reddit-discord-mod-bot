@@ -1,0 +1,18 @@
+{
+    "first_time_setup": false,
+    "discord": {
+        "owner": "",
+        "token": ""
+    },
+    "reddit": {
+        "client_id": "",
+        "client_secret": "",
+        "username": "",
+        "password": "",
+        "user_agent": "Developed by /u/JingzOoi"
+    },
+    "subreddit": {
+        "name": "",
+        "mods": []
+    }
+}
