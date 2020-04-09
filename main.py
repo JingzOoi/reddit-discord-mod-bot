@@ -6,7 +6,7 @@ import asyncio
 import praw
 from functools import partial
 
-client = commands.Bot(command_prefix=commands.when_mentioned_or("-"))
+client = commands.Bot(command_prefix=commands.when_mentioned_or("--"))
 
 
 with open("resources\\settings.json", "r") as f:
@@ -70,6 +70,7 @@ async def setup(ctx):
                         reddit = await loop.run_in_executor(None, partial(praw.Reddit, **client.config["reddit"]))
                         if reddit:
                             await ctx.send("```It would seem like you did not make a mistake. That's great!```")
+                            save_config()
                         else:
                             return await ctx.send("```It would seem like you have made a mistake. You should do this again when you are more prepared.```")
 
@@ -77,6 +78,11 @@ async def setup(ctx):
 @client.command()
 async def alive(ctx):
     return await ctx.send("```I'm here.```")
+
+
+def save_config():
+    with open("resources\\settings.json", "w") as f:
+        f.write(json.dumps(client.config, indent=4))
 
 
 if __name__ == "__main__":
