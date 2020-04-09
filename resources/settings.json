@@ -1,7 +1,6 @@
 {
-    "first_time_setup": false,
     "discord": {
-        "owner": "",
+        "owner": ,
         "token": ""
     },
     "reddit": {
