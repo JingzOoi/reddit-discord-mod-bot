@@ -1,46 +1,56 @@
-<h1>reddit-discord-mod-bot</h1>
+# reddit-discord-mod-bot (Everything is broken right now. Don't download.)
 
-<p>A self-hosted bot to moderate your subreddit from Discord.</p>
+Huge update! Hurray!
 
-<hr>
+Ever thought, "Geez, I'm active on Discord yet I need to scavenge the subreddit I mod every hour to at least fulfill my mod duties"?
 
-<h2>(External) Requirements:</h2>
-<ol>
-    <li><a href='https://www.python.org/downloads/release/python-365/'>Python 3.6</a></li>
-    <li><a href='https://github.com/praw-dev/praw'>Python Reddit API Wrapper (PRAW)</a></li>
-    <li><a href='https://github.com/Rapptz/discord.py'>discord.py</a></li>
-    <li><a href='https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token'>Register your bot with Discord</a></li>
-    <li><a href='https://www.youtube.com/watch?v=krTUf7BpTc0'>Register your script with Reddit </a>(Up till getting the client id and secret for the bot)</li>
-</ol>
+Well, this bot might suit your needs! Do your mod job for virtual Internet attention, all from the comfort from your Discord server!
 
-Best paired with <a href='https://discordapp.com/oauth2/authorize?client_id=372767838231986177&scope=bot&permissions=27648'>Redditcord by @appu#4444</a>.
+## Table of Contents
 
-<hr>
+- [reddit-discord-mod-bot (Everything is broken right now. Don't download.)](#reddit-discord-mod-bot-everything-is-broken-right-now-dont-download)
+  - [Table of Contents](#table-of-contents)
+  - [What's this?](#whats-this)
+  - [How to install](#how-to-install)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+  - [Tips](#tips)
 
-<h2>Installation</h2>
-<ol>
-    <li>Install all the requirements above.</li>
-    <li>Clone/Download this repo.</li>
-    <li>Run setup.py and follow the steps.</li>
-    <li>Run main.py to start the bot.</li>
-</ol>
+## What's this?
 
-<hr>
+A Python script to help you mod your subreddit within Discord.
 
-<h2>What the bot can do</h2>
-Default prefix: -
-<ul>
-    <li>Remove posts</li>
-    <pre>
-        -remove (url) (rule number)
-    </pre>
-    <li>Approve posts</li>
-    <pre>
-        -approve (url)
-    </pre>
-    <li>Display rules</li>
-    <pre>
-        -rules 
-        -rules (rule number)
-    </pre>
-</ul>
+## How to install
+
+### Prerequisites
+
+- You'll need to have Python 3.7. 3.6 might work as well, but it hasn't been tested fully. Make sure you have `pip` and `python` in your environment variables.
+- You'll also need to have a bot registered in the [Discord Developer Portal](https://discordapp.com/developers/applications). Register an application, make a Bot on the sidebar, and take note of the token.
+- You'll also need a Reddit account, obviously. While logged in, go to `preferences` > `apps` > `create another app...`. Fill up the form. You'll need the client ID and client secret.
+
+### Installation
+
+1. Obtain this repo. If you're using the download function, you might want to unzip it first.
+2. Install the requirements. Open up a Command Prompt/Powershell/Terminal in the folder of this repo, and go `pip install -r requirements.txt`. Wait for it to finish its job.
+3. Locate `resources\\settings.json`. Fill in just the part about discord owner and discord token. Make sure that the owner field is filled with owner id and is not surrounded in quotes. Also make sure that the token is in quotes. Like so:
+
+```json
+{
+    "discord": {
+        "owner": {owner_id},
+        "token": "{secret_token}"
+    },
+    ...
+}
+```
+Optionally, you can choose to fill in the rest of the fields *if you know what you're doing*. Just note the formatting about what is `int` and what is `str`. I've already labelled what should be in quotes, **except the owner ID field**. That needs to be an int. If you fail, no worries! Just download a copy from here and just replace it.
+
+4. In the Command Prompt/Powershell/Terminal, type `python main.py` and hit Enter. You might have a problem with your machine automatically choosing Python 2, so if an error pops up you should use `python3 main.py`.
+1. Bot should be live after you see it loading the cogs and logged in.
+2. If you didn't choose to fill in the settings, try using `+setup`. Don't do this on a public server though, there are sensitive data to fill in. Don't say I didn't warn you. Just follow the steps and you'll be fine!
+
+If you need any help, I'm @JZ#4616 on Discord. Good luck!
+
+## Tips
+
+This bot works well together with [Redditcord](https://discordapp.com/oauth2/authorize?client_id=372767838231986177&scope=bot&permissions=27648).
