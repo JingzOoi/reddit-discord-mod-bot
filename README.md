@@ -45,9 +45,10 @@ A Python script to help you mod your subreddit within Discord.
 ```
 Optionally, you can choose to fill in the rest of the fields *if you know what you're doing*. Just note the formatting about what is `int` and what is `str`. I've already labelled what should be in quotes, **except the owner ID field**. That needs to be an int. If you fail, no worries! Just download a copy from here and just replace it.
 
-4. In the Command Prompt/Powershell/Terminal, type `python main.py` and hit Enter. You might have a problem with your machine automatically choosing Python 2, so if an error pops up you should use `python3 main.py`.
-1. Bot should be live after you see it loading the cogs and logged in.
-2. If you didn't choose to fill in the settings, try using `+setup`. Don't do this on a public server though, there are sensitive data to fill in. Don't say I didn't warn you. Just follow the steps and you'll be fine!
+4. Before you start, the bot wants to have a place to communicate with you. You should invite it into your server that you're going to converse with it through a url like this: `https://discordapp.com/oauth2/authorize?client_id={discord_client_id_here}&scope=bot&permissions=0`
+5. In the Command Prompt/Powershell/Terminal, type `python main.py` and hit Enter. You might have a problem with your machine automatically choosing Python 2, so if an error pops up you should use `python3 main.py`.
+6. Bot should be live after you see it loading the cogs and logged in.
+7. If you didn't choose to fill in the settings, try using `+setup`. Don't do this on a public server though, there are sensitive data to fill in. Don't say I didn't warn you. Just follow the steps and you'll be fine!
 
 If you need any help, I'm @JZ#4616 on Discord. Good luck!
 
