@@ -1,2 +1,2 @@
-praw==6.6.1
-discord.py==1.0.0a1790+g43b4475
+discord.py>=1.2.5
+praw>=6.5.1
