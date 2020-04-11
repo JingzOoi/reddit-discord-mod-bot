@@ -1,20 +1,23 @@
-# reddit-discord-mod-bot (Everything is broken right now. Don't download.)
+# reddit-discord-mod-bot
 
 Huge update! Hurray!
 
 Ever thought, "Geez, I'm active on Discord yet I need to scavenge the subreddit I mod every hour to at least fulfill my mod duties"?
 
-Well, this bot might suit your needs! Do your mod job for virtual Internet attention, all from the comfort from your Discord server!
+Well, this bot might suit your needs! Do your mod job for virtual Internet attention, all from the comfort of your Discord server!
 
 ## Table of Contents
 
-- [reddit-discord-mod-bot (Everything is broken right now. Don't download.)](#reddit-discord-mod-bot-everything-is-broken-right-now-dont-download)
+- [reddit-discord-mod-bot](#reddit-discord-mod-bot)
   - [Table of Contents](#table-of-contents)
   - [What's this?](#whats-this)
   - [How to install](#how-to-install)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
   - [Tips](#tips)
+  - [Available commands](#available-commands)
+    - [If you're the owner](#if-youre-the-owner)
+    - [If you're the mod](#if-youre-the-mod)
 
 ## What's this?
 
@@ -55,3 +58,36 @@ If you need any help, I'm @JZ#4616 on Discord. Good luck!
 ## Tips
 
 This bot works well together with [Redditcord](https://discordapp.com/oauth2/authorize?client_id=372767838231986177&scope=bot&permissions=27648).
+
+## Available commands
+
+### If you're the owner
+
+`--now` - Sends a copy of the settings it has. Sensitive data are redacted.
+
+`--updaterules` - Gets the rules of the subreddit you've set and replaces the internal rules file with it. Note that this uses the Rules built-in function of your subreddit, and not whatever you put on your sidebar.
+
+### If you're the mod
+
+`--remove` - Remove post. URL of the post is mandatory, and the reason is optional.
+
+Usage: 
+
+```
+--remove {url} (pinned|faq|answered|num)
+
+```
+
+Pre-built reasons: `pinned`/`faq` (for question posts that ask about a information already in the announcements/faq), `answered` (for question posts that can be removed because an answer is already available)
+
+If `--updaterules` has already been used at least once, you can include a rule number. If you just want to remove the post silently, just don't include the reason.
+
+***
+
+`--approve` - Approve a post. URL is mandatory.
+
+Usage: `--approve {url}`
+
+***
+
+`--rules` - Look at the sub rules. Provide a number for details. Only available if `--updaterules` was used at least once.
