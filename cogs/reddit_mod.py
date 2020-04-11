@@ -15,6 +15,10 @@ class RedditMod(commands.Cog):
         self.subreddit = self.client.config["subreddit"]
         self.rules_path = "resources\\rules.json"
 
+    @staticmethod
+    def blockify(text: str) -> str:
+        return f"```{text}```"
+
     async def get_reddit(self) -> praw.Reddit:
         loop = asyncio.get_event_loop()
         reddit = await loop.run_in_executor(None, partial(praw.Reddit, **self.client.config["reddit"]))
@@ -28,6 +32,24 @@ class RedditMod(commands.Cog):
 
     def is_approved_subreddit(self, submission: praw.reddit.Submission) -> bool:
         return False if submission.subreddit.display_name.lower() != self.subreddit["name"].lower() else True
+
+    def load_rules(self) -> dict:
+        with open(self.rules_path, "r") as f:
+            rules = json.load(f)
+        return rules
+
+    def read_rules(self, num: str = None):
+        rules = self.load_rules()
+        if num in rules:
+            rule = f'Rule {num}: {rules[num]["desc"]}'
+        elif num is None:
+            rule = f'Subreddit Rules for /r/{self.subreddit["name"]}'
+            for r in rules:
+                rule += f'\n{r}: {rules[r]["name"]}'
+        else:
+            rule = "Invalid Rule Number."
+
+        return rule
 
     async def get_rules_from_subreddit(self):
         """Retrieves the rules of the subreddit."""
@@ -86,14 +108,14 @@ class RedditMod(commands.Cog):
                 await loop.run_in_executor(None, c.mod.remove)
         return "```Post approved.```"
 
-    @commands.command()
+    @commands.command(aliases=["removepost"])
     @commands.check(reddit_mod_check)
     async def remove(self, ctx, url, reason: str = None):
         """Remove a post on Reddit from the subreddit. Usage: `--remove {url} {reason}`"""
         await ctx.trigger_typing()
         submission = await self.get_submission(url)
         if not self.is_approved_subreddit(submission):
-            return f'```Invalid subreddit.\nThe post must be from {self.subreddit["name"]} to be removed, but it seems like the provided url pointed me to {submission.subreddit.display_name}.```'
+            return await ctx.send(f'```Invalid subreddit.\nThe post must be from /r/{self.subreddit["name"]} to be removed, but it seems like the provided url pointed me to /r/{submission.subreddit.display_name}.```')
         else:
             if reason is None:
                 message = None
@@ -101,23 +123,33 @@ class RedditMod(commands.Cog):
                 message = "You seem to be asking for a certain information that is available on a pinned post, or an information that is easily available by looking around. You are recommended to check the sidebar, the announcements, or the FAQ before making an enquiry post. The removal is to reduce redundancy on the subreddit."
             elif reason.lower() in ("answered", "a"):
                 message = "Your post seems to contain a question that has been answered. The removal is to reduce redundancy on the subreddit."
+            elif reason in self.load_rules().keys():
+                message = self.read_rules(reason)
             else:
                 return await ctx.send("```Reason not recognized. Post removal failed.```")
 
             reply = await self.remove_submission(submission, message)
             return await ctx.send(reply)
 
-    @commands.command()
+    @commands.command(aliases=["approvepost"])
     @commands.check(reddit_mod_check)
     async def approve(self, ctx, url):
         """Approve a post on Reddit from the subreddit. Usage: `--approve {url}`"""
         await ctx.trigger_typing()
         submission = await self.get_submission(url)
         if not self.is_approved_subreddit(submission):
-            return f'```Invalid subreddit.\nThe post must be from {self.subreddit["name"]} to be approved, but it seems like the provided url pointed me to {submission.subreddit.display_name}.```'
+            return await ctx.send(f'```Invalid subreddit.\nThe post must be from /r/{self.subreddit["name"]} to be approved, but it seems like the provided url pointed me to /r/{submission.subreddit.display_name}.```')
         else:
             reply = await self.approve_submission(url)
             return await ctx.send(reply)
+
+    @commands.command(aliases=["subrules"])
+    @commands.check(reddit_mod_check)
+    async def rules(self, ctx, num: str = None):
+        """Sends a copy of the subreddit rules."""
+        await ctx.trigger_typing()
+        reply = self.read_rules(num)
+        return await ctx.send(self.blockify(reply))
 
 
 def setup(client):
