@@ -19,9 +19,9 @@ async def on_command(ctx):
     print(f"\n@{ctx.author.name}#{ctx.author.discriminator} in #{ctx.channel.name} ({ctx.guild.name}):\n{ctx.message.content}")
 
 
-# @client.event
-# async def on_command_error(ctx, error):
-#     await ctx.send(f"```An error has occured: {error}```")
+@client.event
+async def on_command_error(ctx, error):
+    await ctx.send(f"```An error has occured: {error}```")
 
 
 @client.command()
