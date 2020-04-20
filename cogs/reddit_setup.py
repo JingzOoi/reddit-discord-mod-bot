@@ -4,15 +4,17 @@ import praw
 import json
 import asyncio
 from utils.checks import owner_check
+from utils.construct import construct_path
 from functools import partial
 
 
 class RedditSetup(commands.Cog):
     def __init__(self, client):
         self.client = client
+        self.settings_path = construct_path("resources, settings.json")
 
     def save_config(self):
-        with open("resources\\settings.json", "w") as f:
+        with open(self.settings_path, "w") as f:
             f.write(json.dumps(self.client.config, indent=4))
 
     async def reddit_user_setup(self, ctx):
