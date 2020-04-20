@@ -4,6 +4,7 @@ import praw
 import json
 import asyncio
 from utils.checks import reddit_mod_check, owner_check
+from utils.construct import construct_path, blockify
 from functools import partial
 from datetime import datetime
 import os
@@ -13,11 +14,7 @@ class RedditMod(commands.Cog):
     def __init__(self, client):
         self.client = client
         self.subreddit = self.client.config["subreddit"]
-        self.rules_path = "resources\\rules.json"
-
-    @staticmethod
-    def blockify(text: str) -> str:
-        return f"```{text}```"
+        self.rules_path = construct_path("resources", "rules.json")
 
     async def get_reddit(self) -> praw.Reddit:
         loop = asyncio.get_event_loop()
@@ -102,7 +99,7 @@ class RedditMod(commands.Cog):
     async def approve_submission(self, submission: praw.Reddit.submission):
         loop = asyncio.get_event_loop()
         await loop.run_in_executor(None, submission.mod.approve)
-        async for c in submission.comments:
+        for c in submission.comments.list():
             if c.author == self.client.config["reddit"]["username"]:
                 loop = asyncio.get_event_loop()
                 await loop.run_in_executor(None, c.mod.remove)
@@ -140,7 +137,7 @@ class RedditMod(commands.Cog):
         if not self.is_approved_subreddit(submission):
             return await ctx.send(f'```Invalid subreddit.\nThe post must be from /r/{self.subreddit["name"]} to be approved, but it seems like the provided url pointed me to /r/{submission.subreddit.display_name}.```')
         else:
-            reply = await self.approve_submission(url)
+            reply = await self.approve_submission(submission)
             return await ctx.send(reply)
 
     @commands.command(aliases=["subrules"])
@@ -149,7 +146,7 @@ class RedditMod(commands.Cog):
         """Sends a copy of the subreddit rules."""
         await ctx.trigger_typing()
         reply = self.read_rules(num)
-        return await ctx.send(self.blockify(reply))
+        return await ctx.send(blockify(reply))
 
 
 def setup(client):
