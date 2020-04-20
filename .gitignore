@@ -5,3 +5,5 @@ temp.py
 __pycache__
 
 venv
+
+rules.json
