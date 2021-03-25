@@ -6,7 +6,10 @@ client = commands.Bot(command_prefix=commands.when_mentioned_or("--"))
 
 
 with open("resources\\settings.json", "r") as f:
-    client.config = json.load(f)
+    config = json.load(f)
+
+client = commands.Bot(command_prefix=commands.when_mentioned_or(config["discord"]["prefix"]))
+client.config = config
 
 
 @client.event
