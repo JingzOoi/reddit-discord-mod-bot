@@ -6,7 +6,7 @@ asyncpraw==7.2.0
 asyncprawcore==2.0.1
 attrs==19.3.0
 autopep8==1.5.1
-certifi==2020.4.5.1
+certifi==2022.12.7
 chardet==3.0.4
 colorama==0.4.3
 discord.py==1.6.0
